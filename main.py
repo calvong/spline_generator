@@ -72,40 +72,28 @@ class PlanReader():
         plt.grid()
         plt.show()
 
+
+
 def run():
     print "hello world"
 
-    p = PlanReader()
-
-    pos, vel, accel, traj_time = p.read_plan_file("plan_joint6.txt")
-
-    p.interpolate_traj(pos, traj_time)
-
-
-
-    # r = R.from_euler('z', 45, degrees=True)
-    # r2 = R.from_euler('z', 0, degrees=True)
+    # p = PlanReader()
     #
-    # a = r * r2
+    # pos, vel, accel, traj_time = p.read_plan_file("plan_joint6.txt")
     #
-    # print r.as_quat()
-    # print a.as_quat()
-    #
-    # print r2.as_quat()
-    #
-    #
-    # print a
-    # print r.as_dcm()
-    # print r.as_rotvec()
-    #
-    # r2 = R.from_euler('z', 45, degrees=True)
-    # r2_vec = [r2.as_rotvec(), r2.as_rotvec()]
-    #
-    # a = r.apply(r2_vec)
+    # p.interpolate_traj(pos, traj_time)
 
+    r = R.from_quat([0, 0, 0, 1])
+    rxyz = R.from_euler('xyz', [0, 90, 0], degrees=True)
+    rx = R.from_euler('xyz', [0, 0, 45], degrees=True)
+    new_r = R.from_dcm(np.matmul(rxyz.as_dcm(), rx.as_dcm()))
 
+    print rxyz.as_quat()
 
+    print new_r.as_quat()
 
+    print new_r.as_dcm()
+    
 if __name__ == '__main__':
     run()
 
